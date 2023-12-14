@@ -1,0 +1,122 @@
+hibernate is the implementation of JPA
+JPa is interface
+hibernate is class which implements JPA
+
+
+-----EntityManager------------
+persist vs merge method in entity manager
+
+@Autowired
+EntityManager em;
+Course course=new Course("Learn Spring boot");
+em.persist(course);
+course.setName("Learn Spring boot - updated")
+
+Now first the insert will be done in database and after that that row will be update to updated value as well even we didn't fire query to update in database.
+This is because entity is being managed by entityManager itself.
+if we again setName to something else then one more update query will get executed
+
+if want to stop doing this we can detach the object from entity Manager as follows:
+
+em.detach(course);
+
+now if we do change course.setName() it will no longer go and update the db.
+we have to detach all course objects one by one if we want to detach all objects in once
+we can do, em.clear();
+
+it will clear all the objects being tracked by entityManager.
+
+em.flush() vs em.clear() vs em.detach() vs em.refresh();
+
+
+Course course1 =new Course("Learn Spring boot");
+
+Course course2 =new Course("Learn Spring Security");
+
+em.persist(course1);
+em.persist(course2);
+
+em.flush();
+
+course1.setName("Learn Spring boot - updated")
+course2.setName("Learn Spring security - updated")
+
+
+em.refresh(course1); -- now the updated value in course 1 is one which is in db, it will load the value again from db.
+
+em.flush();
+
+
+now only course2 will get update in db as course1 has been refreshed to previous value(which is stored in db).
+
+-----------JPQL-----------------
+
+SQL - it queries from table
+JPQL - it queries from Entities
+
+What ever JPQL query we write will convert into SQL by JPA implementation which is hibernate
+
+@Id
+@GeneratedValue
+@Table(name="Course")
+@Column(name="name" , nullable=false)
+lenght
+insertable
+updateable
+
+
+
+
+@CreationTimeStamp
+private LocalDateTime createdOn
+
+@UpdateTimestamp
+private LocalDateTime lastUpdatedAt;
+
+
+These two columns will automatically get update whever we update a column, these two annotations/features have been provided by hibernate not JPA.
+
+@NamedQueries
+
+repository.createNamedQuery()
+
+repository.createNativeQuery()
+
+nativeQuery with positions
+nativeQuery with named parameters
+
+we can not do mass updated in JPA we have to use native queries.
+
+
+When does hibernate sends updates to the database.
+
+Hibernate will send update to the db when the method will annotation @Transactional will get executed completely(till last line) unless we don't have em.flush() method in it.
+
+once all changes are made on objects and method get executed completely then changes will be sent to the db.
+
+
+if we need to made any change in database using JPA we need @Transactional.
+Do read only methods need @Transactional ? -  if we are quering through entityManager then no, if we are using relational mapping lazy loading/eager fetching then yes.
+ why do we use @DirtiesContext in junit ? - first we fetch data then we modify it we mactch the data to check if test passes or not and then we data will be updated in db as well because we updated for our test, once we write @DirtiesContext on method all modification to the db will be rollback so it will cause no issues.
+ 
+ 
+ by default one to one mapping is eager fetching
+ 
+@Fetch(FetchType.LAZY, mappedBy ="composedObject name")
+
+
+mapped by will be added at non-owning class.
+
+In many-to-many relationship if we add composed object in both the classes then there will be two join tables created so we need to fix that; we need to make one class as owning class so that there will be only one join table in db.
+
+
+@ManyToMany
+@JoinTable(
+name="student_course",
+joinColuumns=@JoinColumn(name="student_id"),
+inverseJoinColumns=@JoinColumn(name="course_id")
+)
+
+ManyToMany by default fetches data using lazy fetch approach.
+
+

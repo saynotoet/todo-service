@@ -1,0 +1,159 @@
+Web service
+software system designed to support interoperable machine-to-machine interaction over a network.
+
+3 Keys:
+Designed for a machine-to-machine - or application-to-application interaction
+should be interoperable - not platform dependent
+should allow communication over network
+
+
+how does data exchange between applications take place?
+aaplication will request to web service and web service will return response
+
+there are two formats used for request/response:
+XML & JSON
+
+
+how aplication will know what to request
+every web service has service definition which includes:
+request/response formmat
+request structure
+response structure
+endpoint
+
+
+how can we make web services platform independent?
+by making request/response platform independent.
+
+Some of the key terminolgies of web services are:
+Request & response
+Transport (Http and MQ)
+Service provider or server
+service consumer or client
+service definition
+Message exchange formats (xml and JSOn)
+
+
+
+Web services Groups:
+SOAP
+RestFul
+
+SOAP and rest are not compareable
+SOAP - simple object access protocol
+
+while using SOAP
+we need to create soap envelop which will have header and body while header is optional
+
+Format:
+SOAP xml request
+SOAP xml response
+
+Transport:
+SOAP over Http
+SOAP over MQ
+
+Service Definition:
+WSDL - web service definition language
+
+WSDL:
+Endpoint
+All operations
+Request structure
+Response structure
+
+
+
+Rest:
+
+Representational state transfer
+Rest is just use of alread available concepts of http like http methods put post get delete patch and along with that use of http status codes
+200, 202, 404 etc.
+
+Data exchange format:
+no restriction, JSOn is popular
+transport:
+only http
+service definition:
+no standard . WADL/ swagger
+
+
+
+how are our requests get handled? request first go to dispatcher Servlet front controller pattern
+dispatcher servlet is mapped to root "/"
+dispatcher servlet auto configuration
+
+how does any bean get converted to json? Responsebody + jscksonhttpMessageConvertors
+
+who is configuring the error mapping(the url which does not exist at all)? AutoConfiguration (ErrorMVCAutoConfiguration)
+
+how are all the jars available? starter projects.
+
+get vs post vs put vs patch vs delete
+
+rest api documentation:
+1. Open api
+2. swagger
+
+http://localhost:8080/swagger-ui.html
+
+Content-Negotiation:
+it is a term to discuss which approach is to use
+we need to use json or xml format
+we need to use english language or some other languages this all known as content-negotiation
+
+
+Internationalization - i18n
+
+typically to use different languages we need to use "Accept-Language" header in request with langagae for example "en", "fr' or something else we want
+
+Versioning of Rest APi.
+why do we need this. ? if we want to change a minor change in the api we cannot force all the client to change their end immediatly, best way is to define version 2/3/4/5/ and then ask them to update their code and then move to the another version.
+
+How can we version our api:
+1. URL
+2. Request Parameters
+3. Header
+4. Media Type
+
+
+Versioning Rest APi - Factors
+
+Factors to consider while versioning.
+1.URI Pollution
+2.Misue of Http Headers
+3.Caching
+4.can we execute the request on web browser?
+5.API documentation
+
+Summary: there is no perfect solution for this, this can be vary platform to platform.
+As 
+URI Versioning - Twitter
+Request Parameter Versioning - Amazon
+(Custom) Header Versioning - Microsoft
+Media type Versioning - Github
+
+HATEOS - Hypermedia as the engine of state:
+
+
+Serialization - Convert objects to stream(example JSON)
+
+Most popular serialization in java is jackson
+customize fields name - @JsonProperty
+return only selected fields
+
+Two types of filtering:
+
+1.Static  Filtering
+2.Dynamic Filtering
+
+
+Static Filtering - same filtering for a bean across different rest apis.
+@JsonIgnore, @JsonProperty
+
+dynamic filtering- customize filtering for a bean for specific rest api.
+@JsonFilter with Filter providers
+
+
+Hal- explorer to explore the APIs
+

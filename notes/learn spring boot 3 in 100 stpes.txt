@@ -1,0 +1,155 @@
+Agenda:
+why spring boot?
+#what are the goals of spring boot.
+#how does spring boot work
+#spring boot vs spring mvc vs spring
+
+
+#world before spring boot:
+before spring boot we have to manage a lot of things which now are beign mnaaged by framework some of them are below:
+dependency managment: pom.xml
+web app configuration: web.xml
+manage spring beans: context.xml
+impliment non functional requirements: NFRs
+repeat all these steps for all new projects
+this setup can take FEW DAYS
+
+
+#Be production ready:
+-logging
+-different configs for different environments(profiles/configuration properties)
+-monitoring(spring boot actuators)
+
+#Goals of spring boot:
+spring boot helps us making production ready applications
+Spring initializer
+spring boot starter projects - it quickly define the dependencies for the project
+spring boot auto configurations - it automatically provide the configurations for the dependencies based on classpath
+spring boot dev tools - it allows us to have changes deployed without manually restart the application(if changes are done in pom.xml then we need to restart)
+
+#spring boot starter projects:
+I need a lot of frameworks to build application features:
+- build a rest api: I need spring, spring mvc, tomcat, json conversion
+- write unit tests: I need spring test, Junit, Mockito
+
+#How can I group them and make it easy to build applications:
+starters: convenient dependency descriptors for different features.
+Examples:
+Web Application & Rest Api - Spring boot starter web(spring webmvc, spring-web, spring-boot-starter-tomcat, spring-boot-starter-json)
+Unit Tests - Spring boot starter test
+Talk to database using JPA - spring boot starter data JPA
+Talk to db using JDBC - spring boot starter jdbc
+secure your web application/rest api - spring boot starter security
+
+
+
+
+#Profiles
+we may have different configurations/db/web services for dev/prod environment for that we can create different profiles
+
+we declare active profile in application.properties file as mentioned below:
+spring.profiles.active=dev
+spring.profiles.active=prod
+
+now define the properties file for that profile
+application-dev.properties
+application-prod.properties
+
+
+
+
+
+
+
+#Spring boot vs spring vs spring mvc
+*Spring framework: Dependency Injection
+	@Component, @ComponentScan, @Autowoired
+	it identifies components create their objects and inject dependencies.
+	just dependency injection is not sufficient for creating web apps we also need some other frameworks
+	spring modules and spring projects.
+	
+*Spring MVC(spring modules)
+	it simplify the building of web apps and rest apis.
+	building web applications with strut was very complex
+	@Controller, @RestController, @RequestMapping("/endpoint")
+	
+	
+*Spring boot(spring project) build production ready apps quickly
+	starter projects: make it easy to build variety of applications
+	auto-configuration: eliminate manual configuration
+		Enable non-functional requirements(NFRs)
+		Actuator: enables advanced monitoring
+		embedded servers: no need of separate application servers
+		logging and error handling
+		profiles/configuration properties
+		
+# if we annotate a class with @RestController  then we can directly return response from the class.
+# if we annotate a class with @Controller class then we need to add @ResponseBody annotation to the method in ordet to return response.
+# this is very critical difference between @Controller and @RestController
+
+#why use slf4j logger instead of others	
+#when we add spring boot starter web dependency logging starter dependency also added.
+
+#Spring MVC model 1 Architect
+All code in views:(jsp pages)
+view logic
+flow logic
+db queries
+
+Disadvantage:
+very complex JSPs
+zero separation of concerns
+dificult to maintain
+
+#Spring MVC model 2 Architect
+Controllers
+Views
+Model
+model-data to generate the view.
+controller- controlls the flow
+view- show information to the user.
+
+
+advantage: easy to maintain
+
+still we have concern where impliment common features to all controllers
+
+
+#Spring mv model 2 with - front-controller
+
+now all requests will come to the central controller named front controller then front controller will do some common fuctionality 
+and then redirect to other required controller.
+Front-controller only controls the flow to the controller and views. common feature like security type things can be implimented in front-controller
+
+
+
+#Request vs Model vs Session
+
+all the data available in request/model will be lost once the scope changed which means when we route to another request the data from previous request
+will be lost, in order to pertain data we need to store it in session.
+@SessionAttributes("name")
+
+
+#Validations with spring boot
+add spring-boot-starter-validation dependency
+form backing object - 2 way binding controller and view
+add validations in beans 
+display validation errors in the view.
+
+
+#Spring security
+#BcryptPasswordEncode
+#InMemoryDetailsManager
+
+
+
+
+#Getting started with JPA and hibernate
+why JPA/hibernate ?
+JPA vs hibernate
+why spring boot and spring boot data jpa
+
+
+when we are writing a web application we need to return a view then we use @Controller
+when we are writing rest api we just write @RestController so we don't need to write @ResponseBody
+

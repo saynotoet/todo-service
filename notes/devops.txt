@@ -1,0 +1,104 @@
+Learn Docker , Kubernetes, Terraform and azure devops
+
+Docker:
+run a container in detach mode using -d in docker run command
+we can attach process again using -f/-a command to see it's logs
+
+when we download docker desktop
+we acutally downloads the docker client and docker deamon
+then when we try to run an image docker clinet send command to docker daemon/server to run the image 
+docker daemon will search the image if available or not once available then it will start running otherwise it will talk to image registry download image and start running of image 
+in the container.
+
+
+Why docker is popular: ?
+1. Standarized application packaging - same packaging for all types of applications i.e; java python javascript
+2. multi support platform -  local machine/data center/cloud aws/azure/GCP
+3. Light weight and Isolation - containers are lightweight as compared to VM's Isolated from one another.
+
+
+Failure of one container do not affect any  other container.
+
+Docker Images commands:
+docker images
+docker pull mysql
+docker search mysql
+docker image is build layer by layer
+docker image history mysql - it will expose the layers of image mysql
+image id is unique for each image
+docker image inspect "image id" - it will expose the details of image
+
+
+docker image history vs docker image inspect
+
+docker image remove "ïmage id"
+
+we can remove the images
+but if some container exist with that image we need to remove that container first but if container is up then we need to stop the container first.
+
+docker container commands:
+
+docker container run -p 5000:5000 /saynotoet/hello-world-java:0.0.01RELEASE
+
+docker container pause 123
+docker container unpause 123
+docker container stop 123
+docker container kill 123
+kill vs stop
+
+stop will kill the container grace-fully application will have chance to shutdown the all opened stuff. SIGTERM command send in case of stop.
+kill will kill immediately nothing will happen once kill command gets executed. SIGKILL command send in case of kill.
+
+docker container ls
+docker container ls -a
+docker container logs -f container-id
+container container inspect container-id
+docker container prune - this command will remove all the containers.
+
+
+docker system df - show disk usage
+docker system events - get real time events from server
+docker system info - display system wide information
+docker system prune - remove unused data
+
+docker stats container-id
+
+docker container run -p 5000:5000 -d -m 512m /saynotoet/hello-world-java:0.0.01RELEASE - it will use 512mb
+docker container run -p 5000:5000 -d -m 512mb --cpu-quota=50000 /saynotoet/hello-world-java:0.0.01RELEASE - it will use 512mb and half of cpu total cpu-quota is 100000
+
+cmd vs entrypoint
+
+when we have static file name to start the application we should use entrypoint when the file name can be vary then cmd should be used as cmd index.js and passing index1.js the argument index1.js will override the file name index.js runtime entry point can also be override using --entrypoint but it's a bit complex to override entrypoint so it's better to use entrypoint.
+
+
+
+
+
+Building docker images...
+
+go to the dockerfile location execute below command on cmd
+docker build -t saynotoet/hello-world-java:0.0.1RELEASE .
+docker build -t saynotoet/todo-service:0.0.1RELEASE .
+
+once completed execute below mentioned
+
+docker push saynotoet/hello-world-java:0.0.1RELEASE
+once done image is pushed on docker hub
+
+
+
+docker build -t saynotoet/todo-service:0.0.1RELEASE
+
+
+
+
+
+
+
+
+
+----------------kubernetes-------------
+
+Kubernetes simply manages servers.
+Master nodes
+Worker nodes
